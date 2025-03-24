@@ -6,7 +6,7 @@
 /*   By: eric <eric@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:50:02 by eric              #+#    #+#             */
-/*   Updated: 2025/03/24 16:03:56 by eric             ###   ########.fr       */
+/*   Updated: 2025/03/24 21:06:28 by eric             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,32 +73,44 @@ char	*ft_strjoin(char *s1, const char *s2)
 
 char	*get_next_line(int fd)
 {
-	static char buf[BUFFER_SIZE + 1];
-	char	*line;
-	char	*newline;
-	int		countread;
-	int		to_copy;
+	static char buf[BUFFER_SIZE + 1];  // Buffer statique pour garder le reste entre les appels
+	char	*line;       // Ligne qu'on est en train de construire
+	char	*newline;    // Pointeur vers le caractère '\n' dans la ligne
+	int		countread;   // Nombre de caractères lus avec read()
+	int		to_copy;     // Nombre de caractères à garder (jusqu’au '\n' ou fin)
 
+	// On commence par dupliquer le contenu actuel du buffer
 	line = ft_strdup(buf);
-	while (!(newline = ft_strchr(line, '\n')) && (countread = read(fd, buf, BUFFER_SIZE)))
+	if (!line)
+		return (NULL);
+
+	// Tant qu'on n'a pas trouvé de \n et qu'on peut lire, on continue
+	while (!(newline = ft_strchr(line, '\n')) && (countread = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
-		buf[countread] = '\0';
-		line = ft_strjoin(line, buf);	
+		buf[countread] = '\0';          // On termine le buffer en chaîne de caractères
+		line = ft_strjoin(line, buf);   // On ajoute ce qu'on vient de lire à la ligne
+		if (!line)
+			return (NULL);              // En cas d’erreur malloc
 	}
-	if (ft_strlen(line) == 0)
+
+	// Si read a échoué ou si la ligne est vide (EOF sans rien à renvoyer)
+	if (countread < 0 || ft_strlen(line) == 0)
 		return (free(line), NULL);
+
+	// Si on a trouvé un '\n' dans la ligne
 	if (newline != NULL)
 	{
-		to_copy = newline - line + 1;
-		ft_strcpy(buf, newline + 1);
+		to_copy = newline - line + 1;      // On garde jusqu’au \n inclus
+		ft_strcpy(buf, newline + 1);       // Et on garde le reste dans buf
 	}
 	else
 	{
-		to_copy = ft_strlen(line);
-		buf[0] = '\0';
+		to_copy = ft_strlen(line);         // Sinon, on garde toute la ligne
+		buf[0] = '\0';                     // Et on vide le buffer
 	}
-	line[to_copy]= '\0';
-	return (line);
+
+	line[to_copy] = '\0';  // On coupe la chaîne juste après le \n (ou à la fin)
+	return (line);         // Et on retourne la ligne
 }
 
 int main(void)
