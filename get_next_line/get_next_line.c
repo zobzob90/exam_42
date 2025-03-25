@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eric <eric@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ertrigna <ertrigna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:50:02 by eric              #+#    #+#             */
-/*   Updated: 2025/03/24 21:06:28 by eric             ###   ########.fr       */
+/*   Updated: 2025/03/25 13:16:20 by ertrigna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_strchr(const char *s, int c)
 	{
 		if (*s == (char)c)
 			return ((char *)s);
-		*s++;
+		s++;
 	}
 	return (NULL);
 }
@@ -78,12 +78,10 @@ char	*get_next_line(int fd)
 	char	*newline;    // Pointeur vers le caractère '\n' dans la ligne
 	int		countread;   // Nombre de caractères lus avec read()
 	int		to_copy;     // Nombre de caractères à garder (jusqu’au '\n' ou fin)
-
 	// On commence par dupliquer le contenu actuel du buffer
 	line = ft_strdup(buf);
 	if (!line)
 		return (NULL);
-
 	// Tant qu'on n'a pas trouvé de \n et qu'on peut lire, on continue
 	while (!(newline = ft_strchr(line, '\n')) && (countread = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
@@ -92,11 +90,9 @@ char	*get_next_line(int fd)
 		if (!line)
 			return (NULL);              // En cas d’erreur malloc
 	}
-
 	// Si read a échoué ou si la ligne est vide (EOF sans rien à renvoyer)
 	if (countread < 0 || ft_strlen(line) == 0)
 		return (free(line), NULL);
-
 	// Si on a trouvé un '\n' dans la ligne
 	if (newline != NULL)
 	{
@@ -108,7 +104,6 @@ char	*get_next_line(int fd)
 		to_copy = ft_strlen(line);         // Sinon, on garde toute la ligne
 		buf[0] = '\0';                     // Et on vide le buffer
 	}
-
 	line[to_copy] = '\0';  // On coupe la chaîne juste après le \n (ou à la fin)
 	return (line);         // Et on retourne la ligne
 }
