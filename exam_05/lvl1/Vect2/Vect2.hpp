@@ -6,7 +6,7 @@
 /*   By: eric <eric@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:34:39 by eric              #+#    #+#             */
-/*   Updated: 2025/09/22 16:45:22 by eric             ###   ########.fr       */
+/*   Updated: 2025/09/22 17:09:11 by eric             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ class Vect2
 
 	public :
 		Vect2()  : _container(2,0) {}
-		Vect2(int v1, int v2) 
+		Vect2(int v1, int v2) : _container(2)
 		{
-			_container.push_back(v1);
-			_container.push_back(v2);
+			_container[0] = v1;
+			_container[1] = v2;
 		}
 		Vect2(const Vect2& src) : _container(src._container) {}
 		~Vect2() {};
@@ -84,12 +84,12 @@ class Vect2
 	Vect2& operator*=(const Vect2& multion);
 
 	// Comparaison
-	bool operator==(const Vect2& src)
+	bool operator==(const Vect2& src) const
 	{
 		return _container[0] == src._container[0] && _container[1] == src._container[1];
 	}
 
-	bool operator!=(const Vect2& src)
+	bool operator!=(const Vect2& src) const
 	{
 		return !(*this == src);
 	}
