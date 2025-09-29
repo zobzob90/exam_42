@@ -6,7 +6,7 @@
 /*   By: eric <eric@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 11:34:39 by eric              #+#    #+#             */
-/*   Updated: 2025/09/29 09:42:45 by eric             ###   ########.fr       */
+/*   Updated: 2025/09/29 11:04:15 by eric             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,12 @@ class Vect2
 		const int& operator[](int index) const
 		{
 			return (_container[index]);
+		}
+		
+		//permet d'avoir un vecteur negatif;
+		Vect2 operator-() const
+		{
+			return (Vect2(-_container[0], -_container[1]));
 		}
 		
 		// operateur aritm
