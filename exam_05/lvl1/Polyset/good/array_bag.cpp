@@ -8,13 +8,9 @@ array_bag::array_bag() {
 
 array_bag::array_bag(const array_bag &src) {
   size = src.size;
-  if (size > 0) {
-    data = new int[size];
-    for (int i = 0; i < size; i++) {
-      data[i] = src.data[i];
-    }
-  } else {
-    data = nullptr;
+  data = new int[size];
+  for (int i = 0; i < size; i++) {
+	data[i] = src.data[i];
   }
 }
 

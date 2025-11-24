@@ -28,5 +28,5 @@ public:
 private:
   static void destroy_tree(node *);
   static void print_node(node *);
-  static node *copy_node(node *);
+  node *copy_node(node *);
 };
