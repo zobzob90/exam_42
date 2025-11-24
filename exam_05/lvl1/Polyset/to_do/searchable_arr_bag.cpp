@@ -6,7 +6,7 @@
 /*   By: eric <eric@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 12:55:17 by eric              #+#    #+#             */
-/*   Updated: 2025/11/24 13:47:30 by eric             ###   ########.fr       */
+/*   Updated: 2025/11/24 16:54:19 by eric             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@ bool searchable_array_bag::has(int value) const
 {
 	for (int i = 0; i < this->size; i++)
 		if (this->data[i] == value)
-			return true;
+			return (true);
 	return (false);
 }
