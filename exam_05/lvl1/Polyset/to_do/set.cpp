@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   searchable_tree_bag.cpp                            :+:      :+:    :+:   */
+/*   set.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eric <eric@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/24 14:14:29 by eric              #+#    #+#             */
-/*   Updated: 2025/11/26 16:49:12 by eric             ###   ########.fr       */
+/*   Created: 2025/11/26 14:55:12 by eric              #+#    #+#             */
+/*   Updated: 2025/11/26 16:58:42 by eric             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "searchable_tree_bag.hpp"
+#include "set.hpp"
 
-bool searchable_tree_bag::search(node *node, const int value) const
+void set::insert(int item)
 {
-	if (node == nullptr)
-		return (false);
-	if (node->value == value)
-		return (true);
-	else if (value < node->value)
-		return (search(node->l, value));
-	else
-		return (search(node->r, value));
+	if (!bag.has(item))
+		bag.insert(item);
 }
 
-bool searchable_tree_bag::has(int value) const
+void set::insert(int *item, int count)
 {
-	return (search(this->tree, value));
+	for (int i = 0; i < count; i++)
+		insert(item[i]);
 }
